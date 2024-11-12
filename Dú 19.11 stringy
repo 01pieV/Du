@@ -1,1 +1,50 @@
+# uloha 1
+a = input("Zafaj mi číslo: ")
+scitanie = 0
+for cislo in a:
+    scitanie += int(cislo)
+print(scitanie)
+
+#uloha 2
+def fun1(ret):
+    samo = "aeiouy"
+    for i in samo:
+        print(f"Samohláska {i} sa tam nachádza {ret.count(i)} krát.")
+
+a = (input("Napís mi slovo: "))
+fun1(a)
+
+
+#uloha 3
+def fun2(a):
+    prva = a.find("(")
+    posld = a.find(")")
+    if posld-prva >0:
+        print(a[prva:posld+1:])
+    else:
+        print("Nieje tam zátvorka ")
+
+a = input("Napis mi slovo: ")
+fun2(a)
+
+
+#uloha 4
+def fun2(a):
+    prva = a.find("(")
+    posld = a.find(")")
+    if posld-prva >0:
+        print(a[prva:posld+1:])
+    else:
+        print("Nieje tam zátvorka ")
+
+def opakuj(a):
+    while a.find("(") != -1:
+        fun2(a)
+        prva = a.find("(")
+        posld = a.find(")")
+        a = a[:prva:] + a[posld + 1::]
+
+a = input("Napis mi slovo: ")
+opakuj(a)
+
 
