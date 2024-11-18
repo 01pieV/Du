@@ -4,3 +4,28 @@ for i in a:
     if i.isupper() == True:
         b +=1
 print(b)
+
+#uloha 7
+def fun2(a):
+    samohlasky = "aeiouy"
+    novy = ""
+    for i in a:
+        if i not in samohlasky:
+            novy = novy + i
+    print(novy)
+
+
+# uloha 8
+def fun3(a):
+    ozn = 0
+    roz = 0
+    opyt = 0
+    for i in a:
+        if i.find(".") != -1:
+            ozn += 1
+        elif i.find("?")!= -1:
+            opyt += 1
+        elif i.find("!") != -1:
+            roz += 1
+    print(f"Oznamovacích viet je {ozn}, rozkazovaích viet je {roz} a opytovacích viet je {opyt}.")
+fun3("Ahoj. Ako sa máš? umy to!")
