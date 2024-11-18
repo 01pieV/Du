@@ -1,0 +1,6 @@
+a = input("Zadaj slovo: ")
+b = 0
+for i in a:
+    if i.isupper() == True:
+        b +=1
+print(b)
