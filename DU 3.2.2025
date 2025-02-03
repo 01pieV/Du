@@ -17,3 +17,38 @@ def sucet_parne(a):
 
 
 #3.
+def coho_je_viac(a):
+    parne = 0
+    neparne = 0
+    for i in a:
+        if i % 2 == 0:
+            parne += 1
+        else:
+            neparne += 1
+    if parne > neparne:
+        print("parne")
+    elif parne < neparne:
+        print("neparne")
+    else:
+        print("rovnako")
+
+
+#4.
+def parne_pozicie(a):
+    cisla = []
+    for i in range(0, len(a), 2):
+        cisla.append(a[i])
+    return cisla
+
+
+#5.
+def nie_cisla(a):
+    novy = []
+    for i in a:
+        if type(i) != int:
+            if type(i) != float:
+                novy.append(i)
+    print(novy)
+
+
+#6.
