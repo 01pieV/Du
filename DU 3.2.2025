@@ -1,0 +1,19 @@
+#1.
+import random
+def generuj(a):
+    cisla = []
+    for i in range(0, a):
+        cisla.append(random.randrange(5,10))
+    print(cisla)
+
+
+#2.
+def sucet_parne(a):
+    spolu = 0
+    for i in a:
+        if i % 2 == 0:
+            spolu += i
+    print(spolu)
+
+
+#3.
