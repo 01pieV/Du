@@ -4,7 +4,7 @@ def generuj(a):
     cisla = []
     for i in range(0, a):
         cisla.append(random.randrange(5,10))
-    print(cisla)
+    return cisla
 
 
 #2.
@@ -13,7 +13,7 @@ def sucet_parne(a):
     for i in a:
         if i % 2 == 0:
             spolu += i
-    print(spolu)
+    return spolu
 
 
 #3.
@@ -48,7 +48,22 @@ def nie_cisla(a):
         if type(i) != int:
             if type(i) != float:
                 novy.append(i)
-    print(novy)
+    return novy
 
 
 #6.
+def spolu_do_retazca(a):
+    novy = ""
+    for i in a:
+        novy += str(i)
+    zoz = []
+    zoz.append(novy)
+    return zoz
+
+
+#7.
+def zozam_mocnin(a):
+    mocniny = []
+    for i in range(1,a+1):
+        mocniny.append(i**2)
+    return mocniny
