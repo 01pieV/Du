@@ -1,0 +1,23 @@
+fr = open("hada.txt", "r")
+fw = open("vysledok.txt", "w")
+pocitadlo = 1
+riadky = 0
+dlzka_riadku = 0
+najkratsi = 200000
+for riadok in fr:
+  riadky += 1
+  if len(riadok) > dlzka_riadku:
+    dlzka_riadku = len(riadok)
+  if len(riadok) < najkratsi:
+    najkratsi = len(riadok)
+  for i in range(1,len(riadok)):
+    if riadok[i] == riadok[i-1]:
+      pocitadlo += 1
+    else:
+      fw.write(riadok[i-1]+str(pocitadlo) + " ")
+      pocitadlo = 1
+  fw.write("\n")
+print(f"Najdlší riadok bol {dlzka_riadku} .")
+print(f"Najkratší riadok bol {najkratsi} .")
+
+fw.close()
