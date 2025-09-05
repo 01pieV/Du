@@ -21,3 +21,20 @@ print(f"Najdlší riadok bol {dlzka_riadku} .")
 print(f"Najkratší riadok bol {najkratsi} .")
 
 fw.close()
+
+
+
+
+import random
+pocetnost = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
+pocet_opakovani = 10000
+for i in range(pocet_opakovani):
+  prve_c = random.randrange(100,1001)
+  druhe_c = random.randrange(100,1001)
+  vysledok = prve_c**druhe_c
+  cifra = int(str(vysledok)[0])
+  pocetnost[cifra] += 1
+for i in pocetnost:
+  print(round((pocetnost[i]/pocet_opakovani)*100,2), end = ",")
+print(pocetnost)
+  
