@@ -64,40 +64,33 @@ else:
 
 
 import random
-#komprehenzia = rychly zoznam
-def miesaj(co, typ_mies= True):
-  size = len(co)
-  if typ_mies: #nemusim davat true ak sa rovna false vykona else
-    for i in range(size**2):
-      p = random.randrange(0,size)
-      d = random.randrange(0,size)
-      # co[p], co[d] = co[d], co[p] # iba v pythone
-      pom = co[d]
-      co[d] = co[p]
-      co[p] = pom
-  else:
-    parne = [i for i in range(2,size,2)]
-    random.shuffle(parne)
-    neparne = [i for i in range(1,size,2)]
-    random.shuffle(neparne)
+def miesaj(co, typ = True):
+    if typ:
+      random.shuffle(co)
+    else:
+      parne = [i for i in range(2,len(co),2)]
+      random.shuffle(parne)
+      neparne = [i for i in range(1,len(co),2)]
+      random.shuffle(neparne)
+      for i in range(0,len(co)//2-1):
+        co[i*2] = parne[i]
+        co[i*2+1] = neparne[i]
 
-    for i in range(0,size//2-1):
-      co[i*2] = parne[i]
-      co[i*2+1] = neparne[i]
 
-student = []
-otazky = []
-#student = [i for i in range(1,pocete_z+1)]
-pocet_z = int(input("zadaj pocet studentov: "))
-pocet_o = int(input("zadaj pocet otazok:"))
-for i in range(1,pocet_z+1):
-  student.append(i)
-for a in range(1,pocet_o+1):
-  otazky.append(a)
-if len(student)> len(otazky):
-  print("Ja nic nerobim")
+
+
+student = int(input("Koľko študentov: "))
+otazky = int(input("Koľko otázok: "))
+poradie_s = []
+poradie_o = []
+if student<=otazky:
+  for i in range(1,student+1):
+    poradie_s.append(i)
+  for i in range(1,otazky+1):
+    poradie_o.append(i)
+  miesaj(poradie_s,True)
+  miesaj(poradie_o, False)
+  for i in range(student):
+    print(f"študent: {poradie_s[i]}, otazka: {poradie_o[i]}")
 else:
-  miesaj(student)
-  miesaj(otazky, False)
-  for cislo in range(len(student)):
-    print(f"študent číslo:{student[cislo]}- otazka cislo: {otazky[cislo]}")
+  print("viac studentov ako otazok")
