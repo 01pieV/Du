@@ -62,35 +62,3 @@ else:
 
 
 
-
-import random
-def miesaj(co, typ = True):
-    if typ:
-      random.shuffle(co)
-    else:
-      parne = [i for i in range(2,len(co),2)]
-      random.shuffle(parne)
-      neparne = [i for i in range(1,len(co),2)]
-      random.shuffle(neparne)
-      for i in range(0,len(co)//2-1):
-        co[i*2] = parne[i]
-        co[i*2+1] = neparne[i]
-
-
-
-
-student = int(input("Koľko študentov: "))
-otazky = int(input("Koľko otázok: "))
-poradie_s = []
-poradie_o = []
-if student<=otazky:
-  for i in range(1,student+1):
-    poradie_s.append(i)
-  for i in range(1,otazky+1):
-    poradie_o.append(i)
-  miesaj(poradie_s,True)
-  miesaj(poradie_o, False)
-  for i in range(student):
-    print(f"študent: {poradie_s[i]}, otazka: {poradie_o[i]}")
-else:
-  print("viac studentov ako otazok")
