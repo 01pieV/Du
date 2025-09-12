@@ -1,0 +1,30 @@
+#slovnik slovnikov
+
+import json
+def attck_number(power:str)->float:
+    if power == "super effective":
+        return 2
+    if power == "normal effective":
+        return 1
+    if power == "not very effective":
+        return 0.5
+    if power == "no effect":
+        return 0
+
+
+attack = {}
+fr = open("effectiveness.json", "r")
+data = json.load(fr)
+print(data)
+
+for effectivness in data:
+    for attacker in data[effectivness]:
+        if attacker in attack.keys():
+            temp = attack[attacker]
+        else:
+            temp = {}
+        for defender in data[effectivness][attacker]:
+            temp[defender] = attck_number(effectivness)
+        attack[attacker] = temp
+
+print(attack)
