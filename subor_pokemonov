@@ -28,3 +28,6 @@ for effectivness in data:
         attack[attacker] = temp
 
 print(attack)
+
+
+https://dudo.gvpt.sk/programujeme/pokemon/pokemon.html
