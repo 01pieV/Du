@@ -1,0 +1,54 @@
+import json
+def attck_number(power:str)->float:
+    if power == "super effective":
+        return 2
+    if power == "normal effective":
+        return 1
+    if power == "not very effective":
+        return 0.5
+    if power == "no effect":
+        return 0
+
+
+fr = open("effectiveness.json", "r")
+data = json.load(fr)
+# print(data)
+ack = {}
+for effectivness in data:
+    for attacker in data[effectivness]:
+        if attacker in ack.keys():
+            temp = ack[attacker]
+        else:
+            temp = {}
+        for defender in data[effectivness][attacker]:
+            temp[defender] = attck_number(effectivness)
+        ack[attacker] = temp
+# print(ack["Fire"]["Water"])
+
+
+def attack(n1,n2,list):
+    list = list.split(",")
+    for i in list:
+        utoc = []
+        obrana = []
+        for i in range(n1):
+            utoc.append(list[i])
+        for i in range(n2):
+            obrana.append(list[n1+i])
+            print(utoc,obrana)
+        for pokemon in utoc:
+            for druhy_pok in obrana:
+                pok_to_pok(pokemon,druhy_pok)
+
+def pok_to_pok(attacker,defender):
+    total = 0
+    if " " in attacker:
+        attacker = attacker.split()
+        if " " in defender:
+            defender = defender.split()
+            for a in attacker:
+                for b in defender:
+                    total += ack[a][b]
+
+
+attack(2,6,"Psychic Dark,Fire,Ghost Ice,Fairy Electric,Normal Steel,Ghost,Poison Fire,Dark Bug")
