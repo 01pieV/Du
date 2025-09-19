@@ -31,3 +31,33 @@ def sucin(a,b):
     else:
         return a+sucin(a,b-1)
 print(sucin(3,4))
+
+
+
+
+
+
+
+
+def fibo(n):
+    if n == 1 or n ==2:
+        return 1
+    else:
+        return fibo(n-1) + fibo(n-2)
+print(fibo(10))
+
+
+
+
+
+a = [1,2,[3,4,7,[8,9],[5,4,[2,8,9],[4,7,[2,1,8]]]]]
+zoznam = []
+def idk(zoz):
+    global zoznam
+    for item in zoz:
+        if type(item) is int:
+            zoznam.append(item)
+        else:
+            idk(item)
+idk(a)
+print(zoznam)
