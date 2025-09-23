@@ -10,7 +10,7 @@ def attck_number(power: str) -> float:
     if power == "no effect":
         return 0
 
-# Load effectiveness data from the JSON file
+
 fr = open("effectiveness.json", "r")
 data = json.load(fr)
 ack = {}
