@@ -61,3 +61,30 @@ def idk(zoz):
             idk(item)
 idk(a)
 print(zoznam)
+
+
+
+
+
+
+
+for i in range(97,123):
+    print(chr(i),end="")
+
+import string
+for znak in string.ascii_lowercase:
+    for znak2 in string.ascii_lowercase:
+        for znak3 in string.ascii_lowercase:
+            print(znak,znak2,znak3)
+import string
+hlabka = 5
+vys = ["-" for x in range(hlabka)]
+def znaky(pocet):
+    global vys
+    if pocet == 0:
+        print(vys)
+    else:
+        for znak in string.ascii_lowercase:
+            vys[hlabka-pocet] = znak
+            znaky(pocet-1)
+znaky(5)
