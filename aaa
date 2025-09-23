@@ -100,7 +100,7 @@ def attack(n1, n2, list):
         vzhra = "Equal"
     else:
         vzhra = "Foe"
-    return counter, counter2, vzhra
+    return counter.__float__(), counter2.__float__(), vzhra
 
 
-print(attack(2, 6, "Psychic Dark,Fire,Ghost Ice,Fairy Electric,Normal Steel,Ghost,Poison Fire,Dark Bug"))
+print(attack(3,3,"Rock,Rock,Rock,Rock,Rock,Rock"))
