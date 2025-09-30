@@ -47,3 +47,5 @@ def drticka(n):
                 sachovnica[n][x] = 0
 
 drticka(0)
+
+dorobit obrazoka poslat link (cloud)
