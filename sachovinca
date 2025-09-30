@@ -1,0 +1,49 @@
+#zotrojit program ktory najde vsetky ulozenia 8 dam na sachovnici tak aby sa neohozovali navzajom
+# + bonus - na kazde riesenie vygeneruje obrazok
+
+size = 8
+sachovnica = []   #sachvnica = [([0]*size) for i in range(size)]
+
+for i in range(size):
+    temp = []
+    for j in range(size):
+        temp.append(0)
+    sachovnica.append(temp)
+
+    def check(x,y):
+        for i in range(size):
+            if sachovnica[y][i] == 1 or sachovnica[i][x] == 1:
+                return False
+        for i in range(size):
+            for j in range(size):
+               if i+j == x+y:
+                   if sachovnica[i][j] == 1:
+                       return False
+               if i-j == y-x:
+                   if sachovnica[i][j] == 1:
+                       return False
+        return True
+
+    #def create_obrazok():
+        # vytvor obrazok v ktorom sa budu striedať biele/cierne pole
+        # potom najdes sachovnicu a kde najdes 1, tam nakresli skruzok
+        # savni takto obrazok do niakeho subfoldra
+
+#sachovnica[2][7] = 1
+#print(check(4,5))
+# print(sachovnica)
+
+def drticka(n):
+    global sachovnica
+    if n == size:
+        print(sachovnica)
+        print("--------------------------------")
+        #create_obrazok()
+    else:
+        for x in range(size):
+            if check(x,n):
+                sachovnica[n][x] = 1
+                drticka(n+1)
+                sachovnica[n][x] = 0
+
+drticka(0)
