@@ -1,0 +1,19 @@
+fr = open("sudoku.txt", "r")
+tabulka = []
+for i in fr:
+    i = i.strip().split(",")
+    tabulka.append(i)
+def check(x,y,n):
+    if n not in tabulka[y] and n not in tabulka[x]:
+        a = (y//3)*3
+        j = (x//3)*3
+        #if n not in tabulka[a:a+3] and n not in tabulka[j:j+3]:
+        for a in range(a,a+3):
+            for j in range(j,j+3):
+                if n not in tabulka[j][a]:
+                    
+
+    print(tabulka)
+
+check(1,1,5)
+check(1,1,3)
