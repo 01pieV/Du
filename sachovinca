@@ -1,51 +1,67 @@
-#zotrojit program ktory najde vsetky ulozenia 8 dam na sachovnici tak aby sa neohozovali navzajom
-# + bonus - na kazde riesenie vygeneruje obrazok
+from PIL import Image
+import os
 
+if not os.path.exists("sachovnice"):
+    os.makedirs("sachovnice")
+pocet = 0
 size = 8
 sachovnica = []   #sachvnica = [([0]*size) for i in range(size)]
-
 for i in range(size):
     temp = []
     for j in range(size):
         temp.append(0)
     sachovnica.append(temp)
 
-    def check(x,y):
-        for i in range(size):
-            if sachovnica[y][i] == 1 or sachovnica[i][x] == 1:
-                return False
-        for i in range(size):
-            for j in range(size):
-               if i+j == x+y:
-                   if sachovnica[i][j] == 1:
-                       return False
-               if i-j == y-x:
-                   if sachovnica[i][j] == 1:
-                       return False
-        return True
+def check(x,y):
+    for i in range(size):
+        if sachovnica[y][i] == 1 or sachovnica[i][x] == 1:
+            return False
+    for i in range(size):
+        for j in range(size):
+            if i+j == x+y:
+               if sachovnica[i][j] == 1:
+                    return False
+            if i-j == y-x:
+                if sachovnica[i][j] == 1:
+                    return False
+    return True
 
-    #def create_obrazok():
-        # vytvor obrazok v ktorom sa budu striedať biele/cierne pole
-        # potom najdes sachovnicu a kde najdes 1, tam nakresli skruzok
-        # savni takto obrazok do niakeho subfoldra
+def create_obrazok(pocet):
+    size_pole = 60
+    velkost = 8 * size_pole
+    obr4 = Image.new('RGB', (velkost, velkost), 'white')
+    for y in range(8):
+        for x in range(8):
+            if (x + y) % 2 == 0:
+                farba = (255, 255, 255)
+            else:
+                farba = (0, 0, 0)
 
-#sachovnica[2][7] = 1
-#print(check(4,5))
-# print(sachovnica)
+            for i in range(size_pole):
+                for j in range(size_pole):
+                    obr4.putpixel((x * size_pole + i, y * size_pole + j), farba)
+            if sachovnica[y][x] == 1:
+                menej = 10
+                for i in range(menej, size_pole - menej):
+                    for j in range(menej, size_pole - menej):
+                        obr4.putpixel((x * size_pole + i, y * size_pole + j), (255, 0, 0))
+
+    obr4.save(f"sachovnice/riesenie_{pocet}.png")
+
 
 def drticka(n):
-    global sachovnica
+    global sachovnica, pocet
     if n == size:
-        print(sachovnica)
+        create_obrazok(pocet+1)
+        for riadok in sachovnica:
+            print(riadok)
         print("--------------------------------")
-        #create_obrazok()
+        pocet += 1
     else:
         for x in range(size):
             if check(x,n):
                 sachovnica[n][x] = 1
                 drticka(n+1)
                 sachovnica[n][x] = 0
-
 drticka(0)
 
-dorobit obrazoka poslat link (cloud)
