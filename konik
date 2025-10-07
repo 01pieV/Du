@@ -1,0 +1,30 @@
+rozmer = 6
+sachovnica = [[0]*rozmer for i in range(rozmer)]
+
+
+
+def konik(x,y,n):
+    global sachovnica
+    if n==rozmer**2+1:
+        for row in sachovnica:
+            print(row)
+        input()
+    else:
+        if x>=0 and y>=0 and x<rozmer and y<rozmer:
+            if sachovnica[x][y] == 0:
+                sachovnica[x][y] = n
+                konik(x+2,y+1,n+1)
+                konik(x+2,y-1,n+1)
+                konik(x-2, y + 1, n + 1)
+                konik(x-2, y - 1, n + 1)
+                konik(x+1, y + 2, n + 1)
+                konik(x - 1, y + 2, n + 1)
+                konik(x + 1, y - 2, n + 1)
+                konik(x - 1, y - 2, n + 1)
+                sachovnica[x][y] = 0
+            else:
+                return
+        else:
+            return
+
+konik(0,0,1)
