@@ -1,0 +1,20 @@
+# sierpinsky koperec DU
+from PIL import Image, ImageDraw
+import math
+obrazok = Image.new('RGB', (2000, 2000), color=(255, 255, 255))
+def troj(x, y, d):
+    draw = ImageDraw.Draw(obrazok)
+    draw.line((x, y, x+d,y), fill=(0, 0, 0), width=1)
+    draw.line((x+d,y, x+d/2,y-(math.sqrt(3)*d/2)), fill=(0, 0, 0), width=1)
+    draw.line((x,y, x+d/2,y-(math.sqrt(3)*d/2)), fill=(0, 0, 0), width=1)
+    if d>2:
+        troj(x,y,d/2)
+        troj(x+d/2, y, d/2)
+        troj(x + d/4, y - (math.sqrt(3)*d/4), d/2)
+
+
+
+
+
+troj(500, 500, 450)
+obrazok.show()
