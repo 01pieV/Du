@@ -1,0 +1,13 @@
+# grafy --> stromy (podmnoyina)
+# kninžnica, ktorá vie otvárať adresáre --> os (výpis adresárov z disku)
+import os
+
+def walker(path,depth=0):
+    for item in os.listdir(path):
+        if os.path.isdir(path+"//"+item):
+            print("-"*depth, item)
+            walker(path+"//"+item,depth+1)
+
+
+
+walker("D://")
