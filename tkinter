@@ -1,1 +1,28 @@
 #objedkty ktore nakreslim na canvas budu mat pridelene vlastne ID a dokazem ich menit
+import tkinter as tk
+
+def change_color():
+    if canvas.itemcget(object1, 'fill') == 'blue':
+        canvas.itemconfig(object1, fill='red')
+    elif canvas.itemcget(object1, 'fill') == 'red':
+        canvas.itemconfig(object1, fill='blue')
+
+
+window = tk.Tk()
+window.title("Moje okno")
+
+canvas = tk.Canvas(window, width=800, height=600, bg='white')
+canvas.pack()
+
+button1 = tk.Button(window, text="Click me", command=change_color)
+button1.pack()
+
+
+
+object1 = canvas.create_rectangle(100, 100, 200, 200, fill='blue', outline='blue')
+print(object1)
+print(canvas.itemcget(object1, "outline")) # zistim niaku vlastnost
+
+
+window.mainloop()
+
