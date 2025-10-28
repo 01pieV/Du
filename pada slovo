@@ -1,0 +1,39 @@
+import random
+import tkinter as tk
+
+def yes(event):
+    global hadane_slovo
+    print("Stlačil som")
+    if len(event.char) and 97 <= ord(event.char) <= 122:
+        if event.char in vyb_slovo:
+            pozicia = vyb_slovo.find(event.char)
+            hadane_slovo = hadane_slovo[:pozicia] + event.char + hadane_slovo[pozicia+1:]
+            canvas.itemconfig(text, text=hadane_slovo)
+
+
+def animation():
+    canvas.move(text,0, pos_y)
+    if canvas.coords(text)[1] < 950 and "*" in hadane_slovo:
+        canvas.after(1000,animation)
+    else:
+        print("Vyhral si")
+slova = ["python", "tkinter", "jano", "dcera", "jozko", "zuza"]
+width = 500
+pos_y = 20
+win = tk.Tk()
+canvas = tk.Canvas(win, width = width, height=1000, background='white')
+canvas.pack()
+
+vyb_slovo = "python" #random.choice(slova)
+pocet_hviezdiciek = len(vyb_slovo)
+hadane_slovo = "*"*pocet_hviezdiciek
+
+
+text = canvas.create_text(random.randrange(10,width), 10, text=hadane_slovo, font=("Arial", 20))
+animation()
+
+win.bind("<Key>", yes)
+
+
+
+win.mainloop()
