@@ -19,3 +19,33 @@ pes2.sound()
 pes1.__name = "Jozo"
 print(pes1.__name)
 print(pes1.getName())
+
+
+
+class Komplex:
+    def __init__(self, real, imaginary):
+        self.real = real
+        self.imaginary = imaginary
+
+    def abs(self):
+        return (self.real**2 + self.imaginary**2)**0.5
+
+    def __add__(self, other):
+        return Komplex(self.real + other.real, self.imaginary + other.imaginary)
+
+    def __mul__(self, other):
+        return Komplex((self.real * other.real - self.imaginary* other.imaginary), (self.real*other.imaginary + self.imaginary * other.real))
+
+    def __truediv__(self, other):
+        #delenie
+        
+    def __str__(self):  # ako ma vyzerat vypis
+        if self.imaginary >= 0:
+            return f'{self.real} + {self.imaginary}i'
+        else:
+            return f'{self.real} - {self.imaginary}i'
+
+k1 = Komplex(real=3, imaginary=5)
+k2 = Komplex(real=2, imaginary=1)
+k3 = k1 * k2
+print(k3)
