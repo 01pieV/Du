@@ -1,0 +1,21 @@
+class Dog:
+    def __init__(self, name, age):      # konštruktor
+        self.__name = name  # ak je tam __ yneman to ze mam to nechat tak ale mozem to menit
+        self.__age = age
+    def sound(self):
+        print("Štek")
+    #setter
+    def setName(self, name):
+        self.__name = name
+    #getter
+    def getName(self):
+        return self.__name
+
+
+pes1 = Dog("Ayor", "10") # tu sa vola konštruktor, kde sa objekt vytvara
+pes2 = Dog("Hugo", "2")  # tu sa vola konštruktor, kde sa objekt vytvara
+pes1.sound()
+pes2.sound()
+pes1.__name = "Jozo"
+print(pes1.__name)
+print(pes1.getName())
