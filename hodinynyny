@@ -1,0 +1,126 @@
+import tkinter as tk
+import datetime
+
+win = tk.Tk()
+canvas = tk.Canvas(win, width = 1200, height= 600)
+canvas.pack()
+
+class Segment:
+    def __init__(self, x, y, a, b, farba, canvas): # metoda
+        self.canvas = canvas   # existuju jazyky ktore okrem konstruktora maju aj destruktor
+        self.x = x  # vlastnosti objektu
+        self.y = y
+        self.a = a
+        self.b = b
+        self.farba = farba
+    def kresli(self):
+        #self.canvas.create_rectangle(self.x, self.y, self.x + self.a, self.y + self.b, fill=self.farba)
+        if self.a > self.b:
+            self.id = self.canvas.create_polygon(self.x, self.y, self.x + self.a, self.y + self.b,self.x-self.b//2, self.y+self.b//2,self.x + self.a+self.b//2,self.y+self.b//2,fill=self.farba)
+        else:
+            self.id = self.canvas.create_polygon(self.x, self.y, self.x + self.a, self.y + self.b,self.x-self.a//2,self.y+self.a//2,self.x + self.a//2,self.y+self.b+self.a//2, fill=self.farba)
+    def on(self):
+        self.canvas.itemconfig(self.id, state = "normal")
+    def off(self):
+        self.canvas.itemconfig(self.id, state = "hidden")
+class Cislica:
+    def __init__(self, x, y, vs, ms, farba,canvas):
+        self.parts = []
+        self.parts.append(Segment(x+ms, y, vs, ms, farba, canvas))
+        self.parts.append(Segment(x+ms+vs, y+ms,ms, vs, farba, canvas))
+        self.parts.append(Segment(x+ms, y+vs+ms, vs, ms, farba, canvas))
+        self.parts.append(Segment(x, y+ms, ms, vs, farba, canvas))
+        self.parts.append(Segment(x+vs+ms, y+vs+2*ms, ms, vs, farba, canvas))
+        self.parts.append(Segment(x+ms, y+2*ms+2*vs, vs, ms, farba, canvas))
+        self.parts.append(Segment(x, y+2*ms+vs, ms, vs, farba, canvas))
+    def kresli(self):
+        for part in self.parts:
+            part.kresli()
+    def off(self):
+        for part in self.parts:
+            part.off()
+    def on(self):
+        for part in self.parts:
+            part.on()
+    def zobraz(self, cislo):
+        if cislo ==0:
+            self.on()
+            self.parts[2].off()
+        if cislo ==1:
+            self.off()
+            self.parts[1].on()
+            self.parts[4].on()
+        if cislo ==2:
+            self.on()
+            self.parts[3].off()
+            self.parts[4].off()
+        if cislo ==3:
+            self.on()
+            self.parts[3].off()
+            self.parts[6].off()
+        if cislo ==4:
+            self.on()
+            self.parts[0].off()
+            self.parts[6].off()
+            self.parts[5].off()
+        if cislo ==5:
+            self.on()
+            self.parts[1].off()
+            self.parts[6].off()
+        if cislo ==6:
+            self.on()
+            self.parts[1].off()
+        if cislo ==7:
+            self.on()
+            self.parts[2].off()
+            self.parts[3].off()
+            self.parts[5].off()
+            self.parts[6].off()
+        if cislo ==8:
+            self.on()
+        if cislo ==9:
+            self.on()
+            self.parts[6].off()
+
+class Display:
+    def __init__(self, x,y,vs,ms,farba,offset,canvas):
+        self.canvas = canvas
+        self.x = x
+        self.y = y
+        self.vs = vs
+        self.ms = ms
+        self.farba = farba
+        self.offset = offset
+
+        self.cislice = []
+        self.cislice.append(Cislica(x, y, vs, ms,farba, self.canvas))
+        self.cislice.append(Cislica(x + offset, y, vs, ms, farba, self.canvas))
+        self.cislice.append(Cislica(x + 3*offset, y, vs, ms, farba, self.canvas))
+        self.cislice.append(Cislica(x + 4*offset, y, vs, ms, farba, self.canvas))
+
+        self.cislice.append(Cislica(x + 5*offset, y+vs+30, vs//2, ms//2, farba, self.canvas))
+        self.cislice.append(Cislica(x + 5.5*offset, y+vs+30, vs//2, ms//2, farba, self.canvas))
+
+        for cislo in self.cislice:
+            cislo.kresli()
+    def do(self):
+        # dostan aktualny cas
+        # rozparcuj aktualny cas tak aby som prvu cifru dal do prve, ...
+        hodiny = datetime.datetime.now().hour
+        minuty = datetime.datetime.now().minute
+        sekundy = datetime.datetime.now().second
+        self.cislice[0].zobraz(hodiny // 10)
+        self.cislice[1].zobraz(hodiny % 10)
+        self.cislice[2].zobraz(minuty // 10)
+        self.cislice[3].zobraz(minuty % 10)
+        self.cislice[4].zobraz(sekundy // 10)
+        self.cislice[5].zobraz(sekundy % 10)
+        canvas.after(sekundy, self.do)
+
+
+display = Display(100, 100, 100, 20, "blue",160, canvas)
+display.do()
+#s1 = Cislica(100, 100, 100, 20, "blue", canvas)
+#s1.kresli()
+#s1.zobraz(8)
+win.mainloop()
