@@ -56,3 +56,6 @@ objekty = [r, t, c]
 
 for objekty in objekty:
     print(objekty.area())
+
+
+dorobit deffendera a vampire
