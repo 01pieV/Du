@@ -1,0 +1,19 @@
+class Vehicle:
+    def __init__(self,name ,max_speed, milage):
+        self.name = name
+        self.max_speed = max_speed
+        self.milage = milage
+
+
+class Bus(Vehicle):  # dedenie
+    coounter = 0
+    def __init__(self,name, max_speed, milage, capacity=50):
+        super().__init__(name, max_speed, milage)
+        self.capacity = capacity
+
+
+bus1 = Bus('Bus1', 10, 100)
+bus2 = Bus('Bus2', 10, 100)
+Bus.coounter += 1
+print(bus1.coounter)
+print(bus2.coounter)
