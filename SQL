@@ -1,0 +1,24 @@
+# ako sa pripojit k databaze
+# funkcia ktora generaju stringy kde sa strieda spoluhlaska samohlaska a pouzit prikaz ktory vklada nieco do tabulky
+
+import sqlite3
+import random
+conn = sqlite3.connect('C:\\Users\\škola\\DataGripProjects\\SQLite\\identifier.sqlite')
+cursor = conn.cursor()
+
+
+def generovac(dlzka):
+    slovo = ""
+    samohlaksy = "aeiouy"
+    spoluhlasky = "qwrtuzpsdfghjklxcvbnm"
+    for i in range(dlzka):
+        if i % 2 == 0:
+            slovo += random.choice(samohlaksy)
+        else:
+            slovo += random.choice(spoluhlasky)
+    return slovo.capitalize()
+
+for i in range(100):
+    cursor.execute(f"INSERT INTO student(name, priezvisko) VALUES ('{generovac(5)}', '{generovac(8)}')")
+conn.commit()
+conn.close()
