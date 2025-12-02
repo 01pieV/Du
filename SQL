@@ -19,6 +19,16 @@ def generovac(dlzka):
     return slovo.capitalize()
 
 for i in range(100):
-    cursor.execute(f"INSERT INTO student(name, priezvisko) VALUES ('{generovac(5)}', '{generovac(8)}')")
+    cursor.execute(f"INSERT INTO student(meno, priezvisko, oci, noha) VALUES ('{generovac(5)}', '{generovac(8)}', '{random.randrange(1,6)}', '{random.randrange(29,49)}')")
+
+
+cursor.execute(f"SELECT * FROM student WHERE noha = {42}")
+mena = cursor.fetchall()
+
+for i in mena:
+    print(i)
+
+
+
 conn.commit()
 conn.close()
