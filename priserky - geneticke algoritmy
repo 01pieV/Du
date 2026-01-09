@@ -1,0 +1,48 @@
+#priserky - pravidlo njalepsie nechame (ostatne zabijeme) a nechame pomnozit (niaka pravdepodobnost ze sa mutuje - nahodny kod)
+
+import random
+kmen = []
+class priserka:
+    def __init__(self, generation = 0):
+        self.dna = []
+        self.generation = generation
+        if generation == 0:
+            for i in range(10):
+                self.dna.append(random.randrange(0,10))
+        self.stamina = self.dna.count(5)   #toto je nase pravidlo
+
+    def __str__(self):
+        return str(self.dna)
+
+    def __add__(self, other):
+        baby = priserka(self.generation + 1)
+        for pocitadlo in range(len(self.dna)):
+            kocka = random.random()
+            if kocka < 0.9:
+                baby.dna.append(random.choice([self.dna[pocitadlo], other.dna[pocitadlo]]))
+            else:
+                baby.dna.append(random.randrange(0,10))
+        baby.stamina = baby.dna.count(5)
+        return baby
+
+for i in range(10):
+    kmen.append(priserka())
+for a in kmen:
+    print(a)
+print("------------------------------")
+
+for gen in range(100):
+    print(f"Generation: {gen}")
+    #usporiadanie
+    kmen.sort(key = lambda priserka: priserka.stamina, reverse = True)
+    #polovica prec
+    kmen = kmen[:5]
+    #polovicnykrat vyberem dve nahodne pruserky a produkt priradim od kmen
+    for i in range(5):
+        matka = random.choice(kmen)
+        otec = random.choice(kmen)
+        dieta = matka + otec
+        kmen.append(dieta)
+    for a in kmen:
+            print(a)
+    print("------------------------------")
