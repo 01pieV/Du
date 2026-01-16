@@ -28,7 +28,7 @@ expression = input("Zadaj číselný výraz: ")
 
 for char in expression:
     if char.isdigit():
-        output.append(int(char))
+        output.append(str(char))
 
     elif char == "(":
         op_stack.push(char)
@@ -41,9 +41,9 @@ for char in expression:
     elif char == "*" or char == "/" or char == "+" or char == "-":
         if not op_stack.is_empty():
             if value[char] >= value[op_stack.pop()]:
-                op_stack.push(char)
+                op_stack.push(str(char))
                 output.append(char)
         else:
             op_stack.push(char)
-
-print(output)
+output.append(str(op_stack.pop()))
+print(", ".join(output))
