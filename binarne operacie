@@ -28,22 +28,22 @@ expression = input("Zadaj číselný výraz: ")
 
 for char in expression:
     if char.isdigit():
-        output.append(str(char))
+        output.append(char)
 
     elif char == "(":
         op_stack.push(char)
 
     elif char == ")":
-        while not op_stack.is_empty():
-            op_stack.pop()
+        while not op_stack.is_empty() and op_stack.peek() != "(":
             output.append(op_stack.pop())
+        op_stack.pop()
 
-    elif char == "*" or char == "/" or char == "+" or char == "-":
-        if not op_stack.is_empty():
-            if value[char] >= value[op_stack.pop()]:
-                op_stack.push(str(char))
-                output.append(char)
-        else:
-            op_stack.push(char)
-output.append(str(op_stack.pop()))
-print(", ".join(output))
+    elif char in "+-*/":
+        while not op_stack.is_empty() and value[char] <= value[op_stack.peek()]:
+            output.append(op_stack.pop())
+        op_stack.push(char)
+
+while not op_stack.is_empty():
+    output.append(op_stack.pop())
+
+print(" ".join(output))
