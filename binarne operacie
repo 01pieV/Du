@@ -47,3 +47,24 @@ while not op_stack.is_empty():
     output.append(op_stack.pop())
 
 print(" ".join(output))
+
+
+operand_stack = Stack()
+ou = list()
+
+for cha in output:
+    if cha.isdigit():
+        operand_stack.push(int(cha))
+    elif cha in "+-*/":
+        druhy = operand_stack.pop()
+        prvy = operand_stack.pop()
+        if cha == "+":
+            operand_stack.push(prvy + druhy)
+        elif cha == "-":
+            operand_stack.push(prvy - druhy)
+        elif cha == "*":
+            operand_stack.push(prvy * druhy)
+        elif cha == "/":
+            operand_stack.push(prvy / druhy)
+
+print(operand_stack.pop())
