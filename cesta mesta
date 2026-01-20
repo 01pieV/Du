@@ -1,0 +1,30 @@
+import tkinter as tk
+window = tk.Tk()
+
+fr = open("a.txt","r",encoding="utf-8")
+fr2 = open("b.txt","r",encoding="utf-8")
+mesta = dict()
+def spracuj_vrcholy(fr, mesta):
+    for riadok in fr:
+        riadok = riadok.strip().split(";")
+        x = int(riadok[1])
+        y = int(riadok[2])
+        mesta[riadok[0]] = (int(riadok[1]), int(riadok[2]))
+        canvas.create_oval(x-2,y-2,x+2,y+2,fill="black")
+        canvas.create_text(x,y+5,text=riadok[0])
+
+def kresli_cesty(fr2):
+    for riadok in fr2:
+        riadok = riadok.strip().split(";")
+        mesto1 = riadok[1]
+        mesto2 = riadok[2]
+        canvas.create_line(mesto1,mesto2,fill="black")
+canvas = tk.Canvas(window, width=1000, height=600, bg='white')
+canvas.pack()
+
+spracuj_vrcholy(fr, mesta)
+kresli_cesty(fr2)
+
+
+
+window.mainloop()
