@@ -16,9 +16,10 @@ def spracuj_vrcholy(fr, mesta):
 def kresli_cesty(fr2):
     for riadok in fr2:
         riadok = riadok.strip().split(";")
-        mesto1 = riadok[1]
-        mesto2 = riadok[2]
-        canvas.create_line(mesto1,mesto2,fill="black")
+        mesto1 = mesta[riadok[0]]
+        mesto2 = mesta[riadok[1]]
+        canvas.create_line(mesto1[0],mesto1[1],mesto2[0],mesto2[1],fill="black")
+
 canvas = tk.Canvas(window, width=1000, height=600, bg='white')
 canvas.pack()
 
