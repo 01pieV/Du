@@ -4,24 +4,107 @@ window = tk.Tk()
 fr = open("a.txt","r",encoding="utf-8")
 fr2 = open("b.txt","r",encoding="utf-8")
 mesta = dict()
+id_mesta = {}
+mesta_cesty = {}
+
+sur_x = None
+sur_y = None
+posuvany_objekt = None
+
 def spracuj_vrcholy(fr, mesta):
+    global id_mesta
     for riadok in fr:
         riadok = riadok.strip().split(";")
         x = int(riadok[1])
         y = int(riadok[2])
         mesta[riadok[0]] = (int(riadok[1]), int(riadok[2]))
-        canvas.create_oval(x-2,y-2,x+2,y+2,fill="black")
+        temp = canvas.create_oval(x-2,y-2,x+2,y+2,fill="black")
         canvas.create_text(x,y+5,text=riadok[0])
+
+        if temp not in id_mesta:
+            id_mesta[riadok[0]] = temp
+
+def spracuj_mesta_cesty(mesto1,mesto2,cesta):
+    global mesta_cesty
+    mesto1_id = id_mesta[mesto1]
+    mesto2_id = id_mesta[mesto2]
+    if mesto1_id in mesta_cesty:
+        mesta_cesty[mesto1_id].append(cesta)
+    else:
+        mesta_cesty[mesto1_id] = [cesta]
+
+    if mesto2_id in mesta_cesty:
+        mesta_cesty[mesto2_id].append(cesta)
+    else:
+        mesta_cesty[mesto2_id] = [cesta]
+
+def ziskaj_mesto(event):
+    global sur_x, sur_y, posuvany_objekt
+    objekty = canvas.find_overlapping(event.x-2, event.y-2, event.x + 2, event.y + 2)
+    if len(objekty) > 0:
+        if min(objekty) in id_mesta.values():
+            sur_x = event.x
+            sur_y = event.y
+            posuvany_objekt = min(objekty)
+            for a,b in id_mesta.items():
+                if b == min(objekty):
+                    print(f"Trafil som mesto: {a}")
+
+
+def posuvaj(event):
+    global sur_x, sur_y, posuvany_objekt, mesta_cesty
+    if sur_x is not None or sur_y is not None:
+        offset_x = event.x - sur_x
+        offset_y = event.y - sur_y
+
+        print(mesta_cesty[posuvany_objekt])
+        for cesta in mesta_cesty[posuvany_objekt]:
+            print(canvas.coords(posuvany_objekt))
+            print(canvas.coords(cesta))
+            # ak sa rovnaju prve alebo druhe suradnice tak zmen ich posunutim o offset
+            # zisti priemer a stred je /2
+            
+
+        canvas.move(posuvany_objekt, offset_x, offset_y)
+        canvas.move(posuvany_objekt + 1, offset_x, offset_y)
+        sur_x = event.x
+        sur_y = event.y
+        #ale ja chcem hybat cestami - z ID mesta ziskam ID-cka ciar, z id-ciek ziskam koordinaty a tie dktore mam zmenim
+
+
+
+
+
+
+
+
+def cisti(event):
+    global sur_x, sur_y, posuvany_objekt
+    sur_x = None
+    sur_y = None
+    posuvany_objekt = None
+
+
+
 
 def kresli_cesty(fr2):
     for riadok in fr2:
         riadok = riadok.strip().split(";")
+        m1 = riadok[0]
+        m2 = riadok[1]
         mesto1 = mesta[riadok[0]]
         mesto2 = mesta[riadok[1]]
-        canvas.create_line(mesto1[0],mesto1[1],mesto2[0],mesto2[1],fill="black")
+        temp = canvas.create_line(mesto1[0],mesto1[1],mesto2[0],mesto2[1],fill="black")
+        spracuj_mesta_cesty(m1,m2,temp)
+
 
 canvas = tk.Canvas(window, width=1000, height=600, bg='white')
 canvas.pack()
+
+canvas.bind('<Button-1>',ziskaj_mesto)
+canvas.bind('<B1-Motion>',posuvaj)
+canvas.bind('<ButtonRelease>',cisti)
+
 
 spracuj_vrcholy(fr, mesta)
 kresli_cesty(fr2)
@@ -29,3 +112,6 @@ kresli_cesty(fr2)
 
 
 window.mainloop()
+print(mesta)
+print(id_mesta)
+print(mesta_cesty)
