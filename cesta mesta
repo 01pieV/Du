@@ -6,10 +6,14 @@ fr2 = open("b.txt","r",encoding="utf-8")
 mesta = dict()
 id_mesta = {}
 mesta_cesty = {}
+grpah = dict()
+visited = []
+
 
 sur_x = None
 sur_y = None
 posuvany_objekt = None
+
 
 def spracuj_vrcholy(fr, mesta):
     global id_mesta
@@ -24,10 +28,45 @@ def spracuj_vrcholy(fr, mesta):
         if temp not in id_mesta:
             id_mesta[riadok[0]] = temp
 
+
+def pridaj_grafu(mesto1,mesto2):
+    global grpah
+    if mesto1 in grpah:
+        grpah[mesto1][mesto2] = 1
+    else:
+        grpah[mesto1] = {mesto2:1}
+    if mesto2 in grpah:
+        grpah[mesto2][mesto1] = 1
+    else:
+        grpah[mesto2] = {mesto1:1}
+
+def spracuj_do_hlbky(town):
+    global grpah, visited
+    # mesto ktore do mna prislo dam do visited
+    # volitelne: ak chcem tak ta zafarbim na grafe na cerveno
+    # v nejakom cykle sa rozbehnem cez jeho susedov (ziskam ich z graph),
+    # ak ten sused nie je vo visited tak sa rekurzivne s nim zavolam
+    visited.append(town)
+    idcko = id_mesta[town]
+    cor = canvas.coords(idcko)
+    x1 = cor[0]
+    y1 = cor[1]
+    x2 = cor[2]
+    y2 = cor[3]
+    canvas.coords(idcko, x1 + 8, y1 + 8, x2 - 8, y2 - 8)
+    canvas.itemconfig(idcko, fill="red")
+    for i in grpah[town]:
+        if i not in visited:
+            spracuj_do_hlbky(i)
+
+
+
+
 def spracuj_mesta_cesty(mesto1,mesto2,cesta):
     global mesta_cesty
     mesto1_id = id_mesta[mesto1]
     mesto2_id = id_mesta[mesto2]
+    pridaj_grafu(mesto1,mesto2)
     if mesto1_id in mesta_cesty:
         mesta_cesty[mesto1_id].append(cesta)
     else:
@@ -114,9 +153,16 @@ canvas.bind('<Button-1>',ziskaj_mesto)
 canvas.bind('<B1-Motion>',posuvaj)
 canvas.bind('<ButtonRelease>',cisti)
 
-
 spracuj_vrcholy(fr, mesta)
 kresli_cesty(fr2)
+spracuj_do_hlbky("Bratislava")
+
+# funkcia dostava miesto dke zacinam, budem si drzat ci som to mesto uz navstivil (visited)
+
+
+
+print(grpah)
+
 
 
 
