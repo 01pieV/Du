@@ -63,7 +63,16 @@ def posuvaj(event):
             print(canvas.coords(cesta))
             # ak sa rovnaju prve alebo druhe suradnice tak zmen ich posunutim o offset
             # zisti priemer a stred je /2
-            
+            temp = canvas.coords(posuvany_objekt)
+            path = canvas.coords(cesta)
+            stred_x = (temp[0] + temp[2]) / 2
+            stred_y = (temp[1] + temp[3]) / 2
+            if (abs(stred_x - path[0])) <= 3 and (abs(stred_y - path[1])) <= 3:
+                canvas.coords(cesta, path[0]+offset_x, path[1]+offset_y, path[2], path[3])
+            else:
+                canvas.coords(cesta, path[0], path[1], path[2] + offset_x, path[3]+offset_y)
+
+
 
         canvas.move(posuvany_objekt, offset_x, offset_y)
         canvas.move(posuvany_objekt + 1, offset_x, offset_y)
@@ -115,3 +124,5 @@ window.mainloop()
 print(mesta)
 print(id_mesta)
 print(mesta_cesty)
+
+
