@@ -1,0 +1,47 @@
+#                                       algoritmus na vykreslenie úsečky
+
+# tkinter --> canvas 10x10
+import tkinter as tk
+window = tk.Tk()
+canvas = tk.Canvas(width=1000, height=1000, bg="white")
+canvas.pack()
+
+def create_grid(square=10):
+    for i in range(0, canvas.winfo_reqwidth(), square):
+        canvas.create_line(i, 0, i, canvas.winfo_reqheight(), fill="gray")
+    for i in range(0, canvas.winfo_reqheight(), square):
+        canvas.create_line(0, i, canvas.winfo_reqwidth(), i, fill="gray")
+create_grid()
+
+def draw_line(a1,b1,a2,b2,square=10):
+    k = (b2-b1)/(a2-a1)
+    q = b1-a1*k
+    if abs(a1-a2) > abs(b1-b2):
+        for i in range(a1,a2+1):
+            y = k*i+q
+            canvas.create_rectangle(i*square,(y*square).__round__(-1),i*square+square,(y*square).__round__(-1)+square, fill="red")
+    if abs(b1-b2) > abs(a1-a2):
+        for i in range(b1,b2+1):
+            x = (i-q)/k
+            canvas.create_rectangle((x*square))
+            
+            
+
+
+
+
+
+
+
+bod_a = input("Body A: ")
+bod_b = input("Body B: ")
+bod_a_x, bod_a_y = bod_a.split(",")
+bod_b_x, bod_b_y = bod_b.split(",")
+bod_a_x = int(bod_a_x)
+bod_a_y = int(bod_a_y)
+bod_b_x = int(bod_b_x)
+bod_b_y = int(bod_b_y)
+
+draw_line(bod_a_x,bod_a_y,bod_b_x,bod_b_y,square=10)
+window.mainloop()
+
