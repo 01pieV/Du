@@ -1,0 +1,38 @@
+import tkinter as tk
+import math
+vyska_nota = 15
+sirka_nota = 25
+medzera = 1*sirka_nota
+canvas_sirka = 800
+canvas_vyska = 600
+vzdialenost = 8*vyska_nota
+offset = {"c":0,"d":0.5,"e":1,"f":1.5,"g":2,"a":2.5,"h":3}
+
+win = tk.Tk()
+canvas = tk.Canvas(win, width=canvas_sirka, height=canvas_vyska, background='gray')
+canvas.pack()
+
+fr = open('noty.txt', 'r')
+noty = fr.readline().strip()
+pocet_not = len(noty)
+def pocet_osnov():
+    kolko_not = canvas_sirka // (sirka_nota + medzera)
+    kolko_osnov = pocet_not/kolko_not
+    a = math.ceil(kolko_osnov)
+    return a
+
+def sprav_osnovu(n, medzera_osnov):
+    for j in range(n):
+        for i in range(5):
+            canvas.create_line(0, vyska_nota+i*vyska_nota+j*medzera_osnov, canvas_sirka, vyska_nota+i*vyska_nota+j*medzera_osnov, fill='black')
+
+def nots(pocet_not,noty):
+    for poradie in range(pocet_not):
+        print(noty[poradie])
+
+
+
+
+sprav_osnovu(pocet_osnov(), vzdialenost)
+nots(pocet_not,noty)
+win.mainloop()
