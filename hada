@@ -1,0 +1,57 @@
+import tkinter as tk
+
+win = tk.Tk()
+canvas = tk.Canvas(win, width=500, height=500, background='gray')
+canvas.pack()
+
+poloha_x = 250
+poloha_y = 250
+status = "up"
+
+ciary = []
+
+def kresli():
+    global poloha_x, poloha_y, status
+    if status == "up":
+        canvas.create_line(poloha_x, poloha_y, poloha_x, poloha_y-1)
+        poloha_y -= 1
+
+    elif status == "down":
+        canvas.create_line(poloha_x, poloha_y, poloha_x, poloha_y+1)
+        poloha_y += 1
+
+    elif status == "left":
+        canvas.create_line(poloha_x, poloha_y, poloha_x-1, poloha_y)
+        poloha_x -= 1
+
+    elif status == "right":
+        canvas.create_line(poloha_x, poloha_y, poloha_x+1, poloha_y)
+        poloha_x += 1
+
+    if [poloha_x, poloha_y] in ciary:
+        return
+
+
+    ciary.append([poloha_x, poloha_y])
+
+    win.after(10, kresli)
+
+def zmena_smeru(event):
+    global status
+    if event.keysym == "Up":
+        status = "up"
+    elif event.keysym == "Down":
+        status = "down"
+    elif event.keysym == "Left":
+        status = "left"
+    elif event.keysym == "Right":
+        status = "right"
+
+win.bind("<Up>", zmena_smeru)
+win.bind("<Down>", zmena_smeru)
+win.bind("<Left>", zmena_smeru)
+win.bind("<Right>", zmena_smeru)
+
+kresli()
+
+win.mainloop()
