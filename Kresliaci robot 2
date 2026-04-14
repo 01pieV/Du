@@ -1,0 +1,51 @@
+import tkinter as tk
+root = tk.Tk()
+
+smery = ([0,-1],[1,0],[0,1],[-1,0])
+hlava = 0 # prvy smer zo zoznamu
+pozicia_x = 400
+pozicia_y = 400
+dlzka_ciara = 50
+
+
+fr = open("kresliaci_robot2.txt", "r")
+command = []
+for i in fr:
+    i = i.strip()
+    command.append(i)
+
+def execute(c):
+    global pozicia_x, pozicia_y,hlava
+    if c == "ciara":
+        temp_x = pozicia_x+dlzka_ciara*smery[hlava][0]
+        temp_y = pozicia_y+dlzka_ciara*smery[hlava][1]
+        canvas.create_line(pozicia_x,pozicia_y,temp_x,temp_y, fill = "red")
+        pozicia_x = temp_x
+        pozicia_y = temp_y
+    elif c == "vpravo":
+        hlava = (hlava + 1) % len(smery)
+    elif c == "vlavo":
+        hlava = (hlava - 1) % len(smery)
+
+def opakuj(com,n=1):
+    for i in range (n):
+        for comm in com:
+            execute(comm)
+
+
+
+canvas = tk.Canvas(root, width = 800, height = 800)
+canvas.pack()
+
+
+
+
+while len(command) > 0:
+    temp = command.pop(0).split(" ")
+    if temp[0] != "opakuj":
+        execute(temp[0])
+    else:
+        koniec = command.index("koniecopakuj")
+        templist = command[:koniec:]
+        opakuj(templist,int(temp[1]))
+        command = command[koniec:]
