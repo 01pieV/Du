@@ -1,0 +1,42 @@
+import math
+from math import radians
+
+zoznam = [i for i in range(1,51) if i%3 ==0 or i%5==0]
+print(zoznam)
+
+miso = [str(a+str(b)+c) for a in "abc" for b in "2468" for c in "+-/" if a!= "a"]
+print(miso)
+
+roky = [i for i in range(1000,2001) if i%4 == 0 and not (i%100 ==0) or i%400 ==0]
+print(roky)
+
+veta = "Veľký čínsky múr je teda šesťkrát dlhší ako vzdialenosť medzi východným a západným americkým pobrežím"
+
+velky_c =[(slovo.upper(),slovo.lower(),len(slovo))for slovo in veta.split()]
+print(velky_c)
+
+fruit = ['  banana', '  loganberry ', 'passion fruit  ']
+aa = ["".join(i.strip().split()) for i in fruit]
+print(aa)
+
+dvojice = [(i,i**2) for i in range(0,6)]
+print(dvojice)
+
+z = [(i,math.sin(math.radians(i)),math.cos(math.radians(i))) for i in range(0,181,10)]
+print(z)
+
+def prvocislo(cislo):
+    deli = 0
+    for i in range (2,cislo):
+        if cislo % i == 0:
+            return False
+    return True
+
+prvocisla = [i for i in range(2,51) if prvocislo(i)]
+print(prvocisla)
+
+druhe_moc = [i **0.5 for i in range(1,21)]
+print(druhe_moc)
+
+dvoj = [(a,b)for a in "123" for b in "413" if a!=b]
+print(dvoj)
